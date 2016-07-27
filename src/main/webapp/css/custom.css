@@ -1,0 +1,50 @@
+@CHARSET "ISO-8859-1";
+
+.jumbotron{
+	margin: 10% auto;
+    padding: 50px;
+    border-radius: 10px;
+}
+.jumbotron.login {
+    width: 30%;
+}
+
+.jumbotron.table {
+    width: 90%;
+}
+
+.jumbotron.product, .jumbotron.signup{
+    width: 40%;
+}
+
+.alert {
+	width: 500px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+table {
+	background-color: white;
+	margin: 0 auto;
+}
+
+th {
+	color: white; background-color : #2c3e50;
+	text-align: center;
+	background-color: #2c3e50;
+}
+
+.vertical-center {
+	min-height: 100%;
+	background-color: transparent;
+}
+
+.numeric {
+	text-align: right;
+}
+
+body {
+	background-image: url('http://fruzenshtein.com/wp-content/themes/smartblog/images/patterns/gplaypattern.png');
+	background-repeat: repeat;
+}
+
