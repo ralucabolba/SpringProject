@@ -43,13 +43,13 @@
 	<!-- </authentication-manager> -->
 
 	<!-- enable the configuration of transactional behavior based on annotations -->
-    <tx:annotation-driven proxy-target-class="true" transaction-manager="txManager"/>
+<!--     <tx:annotation-driven proxy-target-class="true" transaction-manager="txManager"/> -->
     
 	<!-- Transaction object -->
-	<beans:bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSource" />
-	</beans:bean>
+	<!-- <beans:bean id="txManager" -->
+	<!-- class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+	<!-- <beans:property name="dataSource" ref="dataSource" /> -->
+	<!-- </beans:bean> -->
 
 	<!-- <beans:bean id="userService" class="com.sspring.service.UserServiceImpl"/> -->
 </beans:beans>
