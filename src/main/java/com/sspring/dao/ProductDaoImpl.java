@@ -2,104 +2,111 @@ package com.sspring.dao;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.sspring.bean.Product;
-import com.sspring.mapper.ProductMapper;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
 
-	private JdbcTemplate jdbcTemplate;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private ProductMapper productMapper;
-
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	public boolean add(Product product) {
-		int noRows = this.jdbcTemplate
-				.update("insert into products(name, price, quantity, user_id) values (?, ?, ?, ?)", new Object[] {
-						product.getName(), product.getPrice(), product.getQuantity(), product.getUser().getId() });
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
-		}
+		session.save(product);
 
-		return false;
+		session.getTransaction().commit();
+		session.close();
+
+		return true;
 	}
 
 	@Override
 	public boolean update(Product product) {
-		int noRows = this.jdbcTemplate.update(
-				"update products set name = ?, price = ?, quantity = ?, user_id = ? where id = ?",
-				new Object[] { product.getName(), product.getPrice(), product.getQuantity(), product.getUser().getId(),
-						product.getId() });
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
-		}
+		session.update(product);
 
-		return false;
+		session.getTransaction().commit();
+		session.close();
+
+		return true;
 	}
 
 	@Override
 	public boolean delete(int productId) {
 
-		int noRows = this.jdbcTemplate.update("delete from products where id = ?", new Object[] { productId });
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
+		Product product = session.load(Product.class, productId);
+		if (product != null) {
+			session.delete(product);
 		}
 
-		return false;
+		session.getTransaction().commit();
+		session.close();
+
+		return true;
 
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public Product findById(int id) {
-		try {
-			return (Product) this.jdbcTemplate.queryForObject(
-					"select * from products "
-					+ "inner join users on products.user_id = users.id "
-					+ "inner join roles on users.role_id = roles.id "
-					+ "where products.id = ?",
-					new Object[] { id }, productMapper);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+		Session session = sessionFactory.openSession();
+
+		Criteria criteria = session.createCriteria(Product.class);
+		Product product = (Product) criteria.add(Restrictions.eq("id", id)).uniqueResult();
+
+		session.close();
+
+		return product;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findAll() {
-		return this.jdbcTemplate.query("select * from products "
-				+ "inner join users on products.user_id = users.id "
-				+ "inner join roles on users.role_id = roles.id",
-				productMapper);
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		List<Product> products = session.createQuery("from Product").list();
+
+		session.getTransaction().commit();
+		session.close();
+
+		return products;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findAllForUserId(int userId) {
-		return this.jdbcTemplate.query(
-				"select * from products "
-				+ "inner join users on products.user_id = users.id "
-				+ "inner join roles on users.role_id = roles.id "
-				+ "where user_id = ?",
-				new Object[] { userId }, productMapper);
-	}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
+		Query<Product> query = session.createQuery("from Product p where p.user.id=:userId");
+		query.setParameter("userId", userId);
+
+		List<Product> products = query.list();
+
+		session.getTransaction().commit();
+		session.close();
+
+		return products;
+	}
 
 }

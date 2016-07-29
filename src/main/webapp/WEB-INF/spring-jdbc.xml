@@ -29,28 +29,27 @@
 		</authentication-provider>
 	</authentication-manager>
 
-	<!-- <authentication-manager> -->
-	<!-- <authentication-provider> -->
-	<!-- <password-encoder ref="bcryptEncoder" /> -->
-	<!-- <jdbc-user-service id="jdbcUserService" -->
-	<!-- data-source-ref="dataSource" -->
-	<!-- users-by-username-query="select username, password, enabled from -->
-	<!-- users where username=?" -->
-	<!-- authorities-by-username-query="select users.username, roles.role -->
-	<!-- from users inner join roles on users.role_id=roles.id where users.username=?"/> -->
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<beans:bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="annotatedClasses">
+			<beans:list>
+				<beans:value>com.sspring.bean.User</beans:value>
+				<beans:value>com.sspring.bean.Role</beans:value>
+				<beans:value>com.sspring.bean.Product</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</beans:prop>
+				<beans:prop key="hibernate.current_session_context_class">thread</beans:prop>
+				<beans:prop key="hibernate.show_sql">false</beans:prop>
+				<beans:prop key="hibernate.id.new_generator_mappings">false</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
 
-	<!-- </authentication-provider> -->
-	<!-- </authentication-manager> -->
-
-	<!-- enable the configuration of transactional behavior based on annotations -->
-<!--     <tx:annotation-driven proxy-target-class="true" transaction-manager="txManager"/> -->
-    
-	<!-- Transaction object -->
-	<!-- <beans:bean id="txManager" -->
-	<!-- class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
-	<!-- <beans:property name="dataSource" ref="dataSource" /> -->
-	<!-- </beans:bean> -->
-
-	<!-- <beans:bean id="userService" class="com.sspring.service.UserServiceImpl"/> -->
 </beans:beans>
 	

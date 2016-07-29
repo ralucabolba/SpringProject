@@ -1,69 +1,73 @@
 package com.sspring.dao;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.sspring.bean.Role;
-import com.sspring.mapper.RoleMapper;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-	private JdbcTemplate jdbcTemplate;
-	
+	private SessionFactory sessionFactory;
+
 	@Autowired
-	private RoleMapper roleMapper;
-	
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	public boolean add(Role role) {
-		int noRows = this.jdbcTemplate.update("insert into roles(role) values (?)", new Object[] { role.getRole() });
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
-		}
+		session.save(role);
+		session.getTransaction().commit();
 
-		return false;
+		session.close();
+
+		return true;
 	}
 
 	@Override
 	public boolean update(Role role) {
-		int noRows = this.jdbcTemplate.update("update roles set role = ? where id = ?",
-				new Object[] { role.getRole(), role.getId() });
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
-		}
+		session.update(role);
+		session.getTransaction().commit();
 
-		return false;
+		session.close();
+
+		return true;
 	}
 
 	@Override
 	public boolean delete(Role role) {
-		int noRows = this.jdbcTemplate.update("delete from roles where id = ?", new Object[] { role.getId() });
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
 
-		if (noRows > 0) {
-			return true;
-		}
+		session.delete(role);
+		session.getTransaction().commit();
 
-		return false;
+		session.close();
+
+		return true;
 	}
 
 	@Override
 	public Role findByRole(String role) {
-		try {
-			return (Role) this.jdbcTemplate.queryForObject("select * from roles where role = ?", new Object[] { role },
-					roleMapper);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(Role.class);
+		Role r = (Role) criteria.add(Restrictions.eq("role", role)).uniqueResult();
+
+		session.close();
+
+		return r;
 	}
 
 }

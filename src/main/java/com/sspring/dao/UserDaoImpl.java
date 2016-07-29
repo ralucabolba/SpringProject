@@ -1,104 +1,84 @@
 package com.sspring.dao;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import com.sspring.bean.User;
-import com.sspring.mapper.UserMapper;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	private JdbcTemplate jdbcTemplate;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private UserMapper userMapper;
-	
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	public boolean add(User user) {
-		int noRows = this.jdbcTemplate
-				.update("insert into users(name_user, username, password, age, salary, last_action, role_id) values (?, ?, ?, ?, ?, ?, ?)",
-						new Object[] { 
-								user.getName(), 
-								user.getUsername(),
-								BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()), 
-								user.getAge(), 
-								user.getSalary(),
-								user.getLastAction(), 
-								user.getRole().getId() });
 
-		if (noRows > 0) {
-			return true;
-		}
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
 
-		return false;
+		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+		session.save(user);
+		session.getTransaction().commit();
+
+		session.close();
+		return true;
 	}
-	
+
 	@Override
 	public boolean update(User user) {
-		int noRows = this.jdbcTemplate.update(
-				"update users set name_user = ?, username = ?, password = ?, age = ?, salary = ?, last_action = ?, role_id = ? where id = ?",
-				new Object[] { 
-						user.getName(), 
-						user.getUsername(), 
-						user.getPassword(), 
-						user.getAge(), 
-						user.getSalary(),
-						user.getLastAction(), 
-						user.getRole().getId(), 
-						user.getId() });
-		if (noRows > 0) {
-			return true;
-		}
 
-		return false;
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
+
+		session.update(user);
+		session.getTransaction().commit();
+
+		session.close();
+		return true;
 	}
 
 	@Override
 	public boolean delete(User user) {
-		int noRows = this.jdbcTemplate.update("delete from users where id = ?", new Object[] { user.getId() });
 
-		if (noRows > 0) {
-			return true;
-		}
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
 
-		return false;
+		session.delete(user);
+		session.getTransaction().commit();
+
+		session.close();
+		return true;
 	}
-
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public User findById(int id) {
-		try {
-			return (User) this.jdbcTemplate.queryForObject("select * from users "
-					+ "inner join roles on users.role_id = roles.id "
-					+ "where users.id = ?", new Object[] { id }, userMapper);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+
+		Session session = this.sessionFactory.openSession();
+		User user = session.get(User.class, id);
+		session.close();
+
+		return user;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public User findUserByUsername(String username) {
-		try {
-			return (User) this.jdbcTemplate.queryForObject("select * from users "
-					+ "inner join roles on users.role_id = roles.id "
-					+ "where users.username = ?",
-					new Object[] { username }, userMapper);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(User.class);
+		User user = (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
+		return user;
 	}
-	
+
 }

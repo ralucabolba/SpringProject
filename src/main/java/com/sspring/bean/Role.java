@@ -2,15 +2,26 @@ package com.sspring.bean;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Bean class representing the role an user can have
+ * 
  * @author ralucab
  *
  */
+@Entity
+@Table(name = "roles")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 7746197782283698989L;
 
+	@Id
+	@GeneratedValue
 	private int id;
+
 	private String role;
 
 	public int getId() {

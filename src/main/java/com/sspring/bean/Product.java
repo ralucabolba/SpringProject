@@ -2,6 +2,13 @@ package com.sspring.bean;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Bean class product representing an ordinary product, with price and quantity
  * attributes
@@ -9,13 +16,21 @@ import java.io.Serializable;
  * @author ralucab
  *
  */
+
+@Entity
+@Table(name = "products")
 public class Product implements Serializable {
 	private static final long serialVersionUID = -1079322051204927830L;
 
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private double price;
 	private int quantity;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public int getId() {

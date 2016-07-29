@@ -1,8 +1,6 @@
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\bean\Role.java
-D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\mapper\ProductMapper.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\dao\RoleDaoImpl.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\dao\UserDaoImpl.java
-D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\mapper\UserMapper.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\service\ProductServiceImpl.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\dao\ProductDaoImpl.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\service\ProductService.java
@@ -20,4 +18,3 @@ D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\service\UserServiceI
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\validator\UserValidator.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\controller\UserController.java
 D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\service\UserService.java
-D:\workspace_neon\GoodSpringLogin\src\main\java\com\sspring\mapper\RoleMapper.java
