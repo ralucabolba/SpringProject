@@ -11,8 +11,6 @@ import com.sspring.bean.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	public Product save(Product product);
 
-//	public void update(Product product);
-
 	public void delete(Product product);
 
 	public Product findById(int id);
