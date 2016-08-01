@@ -31,7 +31,7 @@
 
 	<!-- Hibernate 4 SessionFactory Bean definition -->
 	<beans:bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="annotatedClasses">
 			<beans:list>
@@ -42,7 +42,7 @@
 		</beans:property>
 		<beans:property name="hibernateProperties">
 			<beans:props>
-				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect
 				</beans:prop>
 				<beans:prop key="hibernate.current_session_context_class">thread</beans:prop>
 				<beans:prop key="hibernate.show_sql">false</beans:prop>
@@ -50,6 +50,4 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-
 </beans:beans>
-	

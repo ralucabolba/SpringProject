@@ -37,14 +37,26 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public boolean update(Product product) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 
-		session.update(product);
+		//session.update(product);
 
+		
+
+		Query<Product> query = session.createSQLQuery("update products set name = :name, price = :price, quantity = :quantity, user_id = :uid where id = :id");
+		query.setParameter("name", product.getName());
+		query.setParameter("price", "3e5rw3");
+		query.setParameter("quantity", product.getQuantity());
+		query.setParameter("uid", product.getUser().getId());
+		query.setParameter("id", product.getId());
+		
+		query.executeUpdate();
+		
+		
 		session.getTransaction().commit();
 		session.close();
-
+		
 		return true;
 	}
 

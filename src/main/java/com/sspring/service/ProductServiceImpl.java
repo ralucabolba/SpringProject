@@ -16,7 +16,7 @@ import com.sspring.dao.UserDao;
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private ProductDao productDao;
 
@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = RuntimeException.class)
 	public void update(Product product, User user) {
 		user.setLastAction(new Date());
 		userDao.update(user);
@@ -58,6 +58,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findAllForUserId(int userId) {
 		return productDao.findAllForUserId(userId);
 	}
-	
-	
+
 }

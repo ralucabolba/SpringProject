@@ -107,11 +107,14 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.1.1.RELEASE</version>
+			<version>4.3.1.RELEASE</version>
 		</dependency>
+
+
 	</dependencies>
 
 

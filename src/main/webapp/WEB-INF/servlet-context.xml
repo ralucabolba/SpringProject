@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -40,8 +39,15 @@
 		transaction-manager="txManager" />
 
 	<beans:bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSource" />
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<beans:property name="globalRollbackOnParticipationFailure"
+			value="false" />
+		<beans:property name="sessionFactory" ref="sessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="txTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<beans:property name="transactionManager" ref="txManager"></beans:property>
 	</beans:bean>
 
 	<context:component-scan
