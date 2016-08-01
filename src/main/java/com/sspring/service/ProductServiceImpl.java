@@ -9,39 +9,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Product;
 import com.sspring.bean.User;
-import com.sspring.dao.ProductDao;
-import com.sspring.dao.UserDao;
+import com.sspring.repository.ProductRepository;
+import com.sspring.repository.UserRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductRepository productDao;
 
 	@Override
 	@Transactional
 	public void add(Product product, User user) {
 		user.setLastAction(new Date());
-		userDao.update(user);
-		productDao.add(product);
+		userDao.save(user);
+		productDao.save(product);
 	}
 
 	@Override
 	@Transactional
 	public void update(Product product, User user) {
 		user.setLastAction(new Date());
-		userDao.update(user);
-		productDao.update(product);
+		userDao.save(user);
+		productDao.save(product);
 	}
 
 	@Override
 	@Transactional
-	public void delete(int productId, User user) {
+	public void delete(Product product, User user) {
 		user.setLastAction(new Date());
-		userDao.update(user);
-		productDao.delete(productId);
+		userDao.save(user);
+		productDao.delete(product);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findAllForUserId(int userId) {
-		return productDao.findAllForUserId(userId);
+		return productDao.findAllByUserId(userId);
 	}
 	
 	

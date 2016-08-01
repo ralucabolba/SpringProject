@@ -129,9 +129,10 @@ public class ProductController {
 
 		/* Get the authenticated user in order to update the activity field */
 		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
+		Product product = productService.findById(productId);
+		
 		try {
-			productService.delete(productId, user);
+			productService.delete(product, user);
 		} catch (Exception e) {
 			e.printStackTrace();
 

@@ -15,9 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sspring.bean.Product;
 import com.sspring.bean.User;
-import com.sspring.dao.ProductDao;
-import com.sspring.dao.RoleDao;
-import com.sspring.dao.UserDao;
 import com.sspring.service.UserService;
 import com.sspring.util.UtilService;
 import com.sspring.validator.UserValidator;

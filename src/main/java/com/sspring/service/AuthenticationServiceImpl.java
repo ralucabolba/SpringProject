@@ -11,19 +11,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.sspring.dao.UserDao;
+import com.sspring.repository.UserRepository;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService, UserDetailsService {
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		com.sspring.bean.User user;
 
 		try {
-			user = userDao.findUserByUsername(username);
+			user = userDao.findByUsername(username);
 			if (user == null) {
 				throw new UsernameNotFoundException("Username not found.");
 			}

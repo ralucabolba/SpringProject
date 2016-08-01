@@ -13,7 +13,37 @@ import com.sspring.bean.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	private SessionFactory sessionFactory;
+	@Override
+	public boolean add(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public User findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*private SessionFactory sessionFactory;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -80,5 +110,5 @@ public class UserDaoImpl implements UserDao {
 		User user = (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
 		return user;
 	}
-
+*/
 }

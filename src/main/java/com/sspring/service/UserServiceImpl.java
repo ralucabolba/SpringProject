@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 import com.sspring.bean.Product;
 import com.sspring.bean.Role;
 import com.sspring.bean.User;
-import com.sspring.dao.ProductDao;
-import com.sspring.dao.RoleDao;
-import com.sspring.dao.UserDao;
+import com.sspring.repository.ProductRepository;
+import com.sspring.repository.RoleRepository;
+import com.sspring.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private RoleDao roleDao;
+	private RoleRepository roleDao;
 	
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductRepository productDao;
 	
 	@Override
 	public boolean add(User user) {
@@ -30,17 +30,19 @@ public class UserServiceImpl implements UserService {
 		Role role = roleDao.findByRole("ROLE_USER");
 		
 		user.setRole(role);
-		return userDao.add(user);
+		return (userDao.save(user) == null);
 	}
 	
 	@Override
 	public boolean update(User user) {
-		return userDao.update(user);
+		userDao.save(user);
+		return true;
 	}
 
 	@Override
 	public boolean delete(User user) {
-		return userDao.delete(user);
+		userDao.delete(user);
+		return true;
 	}
 	
 
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
 		if (role.equals("ROLE_ADMIN")) { // show all the products for the admin
 			products = productDao.findAll();
 		} else if (role.equals("ROLE_USER")) { // and for user only his/her products
-			products = productDao.findAllForUserId(user.getId());
+			products = productDao.findAllByUserId(user.getId());
 		}
 		
 		return products;
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findUserByUsername(String username) {
-		return userDao.findUserByUsername(username);
+		return userDao.findByUsername(username);
 	}
 
 	@Override

@@ -11,7 +11,31 @@ import com.sspring.bean.Role;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-	private SessionFactory sessionFactory;
+
+	@Override
+	public boolean add(Role role) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Role role) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Role role) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Role findByRole(String role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*private SessionFactory sessionFactory;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -68,6 +92,6 @@ public class RoleDaoImpl implements RoleDao {
 		session.close();
 
 		return r;
-	}
+	}*/
 
 }

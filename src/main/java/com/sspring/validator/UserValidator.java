@@ -7,12 +7,12 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.sspring.bean.User;
-import com.sspring.dao.UserDao;
+import com.sspring.repository.UserRepository;
 
 @Component
 public class UserValidator implements Validator {
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -29,7 +29,7 @@ public class UserValidator implements Validator {
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Empty");
-		if (userDao.findUserByUsername(user.getUsername()) != null) {
+		if (userDao.findByUsername(user.getUsername()) != null) {
 			errors.rejectValue("username", "Duplicate.registration.username");
 		}
 
