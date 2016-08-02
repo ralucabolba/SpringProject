@@ -11,9 +11,11 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- Password encoder bean definition -->
 	<beans:bean name="bcryptEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<!-- MySql database bean definition -->
 	<beans:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -29,7 +31,7 @@
 		</authentication-provider>
 	</authentication-manager>
 
-	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<!-- Hibernate 5 SessionFactory Bean definition -->
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
@@ -44,10 +46,11 @@
 			<beans:props>
 				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect
 				</beans:prop>
-				<beans:prop key="hibernate.current_session_context_class">thread</beans:prop>
 				<beans:prop key="hibernate.show_sql">false</beans:prop>
 				<beans:prop key="hibernate.id.new_generator_mappings">false</beans:prop>
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+	
+	
 </beans:beans>

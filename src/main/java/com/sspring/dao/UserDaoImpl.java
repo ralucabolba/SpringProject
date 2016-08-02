@@ -1,5 +1,7 @@
 package com.sspring.dao;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,9 +9,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.User;
 
+@Transactional
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -21,64 +25,46 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean add(User user) {
-
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-
+	public void add(User user) {
 		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-		session.save(user);
-		session.getTransaction().commit();
-
-		session.close();
-		return true;
+		this.sessionFactory.getCurrentSession().save(user);
 	}
 
 	@Override
-	public boolean update(User user) {
-
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-
-		session.update(user);
-		session.getTransaction().commit();
-
-		session.close();
-		return true;
+	public void update(User user) {
+		this.sessionFactory.getCurrentSession().update(user);
 	}
 
 	@Override
-	public boolean delete(User user) {
-
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-
-		session.delete(user);
-		session.getTransaction().commit();
-
-		session.close();
-		return true;
+	public void delete(User user) {
+		this.sessionFactory.getCurrentSession().delete(user);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public User findById(int id) {
-
-		Session session = this.sessionFactory.openSession();
-		User user = session.get(User.class, id);
-		session.close();
-
-		return user;
+		try {
+			return this.sessionFactory.getCurrentSession().get(User.class, id);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public User findUserByUsername(String username) {
-		Session session = sessionFactory.openSession();
-		
-		Criteria criteria = session.createCriteria(User.class);
-		User user = (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
-		return user;
+		/*
+		 * Session session = sessionFactory.getCurrentSession(); //
+		 * session.beginTransaction();
+		 * 
+		 * Criteria criteria = session.createCriteria(User.class); User user =
+		 * (User) criteria.add(Restrictions.eq("username",
+		 * username)).uniqueResult(); return user;
+		 */
+		try {
+			return (User) this.sessionFactory.getCurrentSession().createQuery("from User where username = ?")
+					.setParameter(0, username).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 }

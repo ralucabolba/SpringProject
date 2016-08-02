@@ -110,7 +110,7 @@ public class ProductController {
 		try {
 			productService.update(product, user);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 
 			attr.addFlashAttribute("incorrectProductMessage", "Could not update product. Please try again later.");
 			model.setViewName("redirect:/success/update/" + product.getId());

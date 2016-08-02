@@ -4,11 +4,11 @@ import com.sspring.bean.User;
 
 public interface UserDao {
 
-	public boolean add(User user);
+	public void add(User user);
 	
-	public boolean update(User user);
+	public void update(User user);
 
-	public boolean delete(User user);
+	public void delete(User user);
 
 	public User findById(int id);
 

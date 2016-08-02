@@ -3,11 +3,11 @@ package com.sspring.dao;
 import com.sspring.bean.Role;
 
 public interface RoleDao {
-	public boolean add(Role role);
+	public void add(Role role);
 
-	public boolean update(Role role);
+	public void update(Role role);
 
-	public boolean delete(Role role);
+	public void delete(Role role);
 	
 	public Role findByRole(String role);
 }

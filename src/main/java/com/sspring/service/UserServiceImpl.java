@@ -25,22 +25,22 @@ public class UserServiceImpl implements UserService {
 	private ProductDao productDao;
 	
 	@Override
-	public boolean add(User user) {
+	public void add(User user) {
 		/*Get the Role object for ROLE_USER*/
 		Role role = roleDao.findByRole("ROLE_USER");
 		
 		user.setRole(role);
-		return userDao.add(user);
+		userDao.add(user);
 	}
 	
 	@Override
-	public boolean update(User user) {
-		return userDao.update(user);
+	public void update(User user) {
+		userDao.update(user);
 	}
 
 	@Override
-	public boolean delete(User user) {
-		return userDao.delete(user);
+	public void delete(User user) {
+		userDao.delete(user);
 	}
 	
 
