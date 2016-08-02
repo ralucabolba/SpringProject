@@ -6,11 +6,11 @@ import com.sspring.bean.Product;
 
 public interface ProductDao {
 
-	public void add(Product product);
-
 	public void update(Product product);
 
 	public void delete(int productId);
+	
+	public void persist(Product product);
 
 	public Product findById(int id);
 

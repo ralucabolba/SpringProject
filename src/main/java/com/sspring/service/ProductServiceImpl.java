@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 	public void add(Product product, User user) {
 		user.setLastAction(new Date());
 		userDao.update(user);
-		productDao.add(product);
+		productDao.persist(product);
 	}
 
 	@Override

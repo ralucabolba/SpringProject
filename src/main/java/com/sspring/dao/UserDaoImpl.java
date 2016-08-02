@@ -11,39 +11,39 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sspring.bean.Product;
 import com.sspring.bean.User;
 
 @Transactional
 @Repository
 public class UserDaoImpl implements UserDao {
 
+	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
 	@Override
-	public void add(User user) {
-		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-		this.sessionFactory.getCurrentSession().save(user);
+	public void persist(User user) {
+		this.getSession().persist(user);
 	}
 
 	@Override
 	public void update(User user) {
-		this.sessionFactory.getCurrentSession().update(user);
+		this.getSession().update(user);
 	}
 
 	@Override
 	public void delete(User user) {
-		this.sessionFactory.getCurrentSession().delete(user);
+		this.getSession().delete(user);
 	}
 
 	@Override
 	public User findById(int id) {
 		try {
-			return this.sessionFactory.getCurrentSession().get(User.class, id);
+			return this.getSession().get(User.class, id);
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -51,17 +51,11 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findUserByUsername(String username) {
-		/*
-		 * Session session = sessionFactory.getCurrentSession(); //
-		 * session.beginTransaction();
-		 * 
-		 * Criteria criteria = session.createCriteria(User.class); User user =
-		 * (User) criteria.add(Restrictions.eq("username",
-		 * username)).uniqueResult(); return user;
-		 */
 		try {
-			return (User) this.sessionFactory.getCurrentSession().createQuery("from User where username = ?")
-					.setParameter(0, username).getSingleResult();
+			return (User) getSession().createCriteria(User.class)
+					.add(Restrictions.eq("username", username))
+					.uniqueResult();
+			
 		} catch (NoResultException e) {
 			return null;
 		}

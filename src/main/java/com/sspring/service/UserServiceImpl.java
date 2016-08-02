@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 		Role role = roleDao.findByRole("ROLE_USER");
 		
 		user.setRole(role);
-		userDao.add(user);
+		userDao.persist(user);
 	}
 	
 	@Override

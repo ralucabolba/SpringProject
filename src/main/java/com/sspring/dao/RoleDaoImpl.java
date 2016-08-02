@@ -1,6 +1,5 @@
 package com.sspring.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -9,49 +8,43 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Role;
-import com.sspring.bean.User;
 
 @Transactional
 @Repository
 public class RoleDaoImpl implements RoleDao {
+	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
 	@Override
-	public void add(Role role) {
-		this.sessionFactory.getCurrentSession().save(role);
+	public void persist(Role role) {
+		this.getSession().persist(role);
 	}
 
 	@Override
 	public void update(Role role) {
-		this.sessionFactory.getCurrentSession().update(role);
+		this.getSession().update(role);
 	}
 
 	@Override
 	public void delete(Role role) {
-		this.sessionFactory.getCurrentSession().delete(role);
+		this.getSession().delete(role);
 	}
 
 	@Override
 	public Role findByRole(String role) {
-		/*Session session = this.sessionFactory.getCurrentSession();
-		//session.beginTransaction();
-
-		Criteria criteria = session.createCriteria(Role.class);
-		Role r = (Role) criteria.add(Restrictions.eq("role", role)).uniqueResult();
-
-		//session.close();
-
-		return r;*/
-		
-		return (Role) this.sessionFactory.getCurrentSession()
+		/*return (Role) this.getSession()
 				.createQuery("from Role where role = ?")
 				.setParameter(0, role)
-				.getSingleResult();
+				.getSingleResult();*/
+		
+		return (Role) getSession()
+				.createCriteria(Role.class)
+				.add(Restrictions.eq("role", role))
+				.uniqueResult();
 	}
 
 }

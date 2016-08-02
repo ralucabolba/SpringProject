@@ -2,12 +2,15 @@ package com.sspring.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,22 +33,25 @@ public class User implements Serializable {
 
 	@Column(name = "name_user")
 	private String name;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	@Transient
 	private String confirmationPassword;
-	
+
 	private int age;
-	
+
 	private double salary;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_action")
 	private Date lastAction;
-	
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Product> products;
+
 	@ManyToOne
 	private Role role;
 
@@ -119,6 +125,14 @@ public class User implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
 }
