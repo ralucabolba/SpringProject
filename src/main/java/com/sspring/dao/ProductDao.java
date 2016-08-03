@@ -15,7 +15,4 @@ public interface ProductDao {
 	public Product findById(int id);
 
 	public List<Product> findAll();
-
-	public List<Product> findAllForUserId(int userId);
-
 }

@@ -15,6 +15,4 @@ public interface ProductService {
 	public Product findById(int productId);
 	
 	public List<Product> findAll();
-
-	public List<Product> findAllForUserId(int userId);
 }

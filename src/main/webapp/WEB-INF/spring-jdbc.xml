@@ -32,18 +32,29 @@
 	</authentication-manager>
 
 	<!-- Hibernate 5 SessionFactory Bean definition -->
-	<beans:bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<!-- <beans:bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"> 
+		<beans:property name="dataSource" ref="dataSource" /> <beans:property name="annotatedClasses"> 
+		<beans:list> <beans:value>com.sspring.bean.User</beans:value> <beans:value>com.sspring.bean.Role</beans:value> 
+		<beans:value>com.sspring.bean.Product</beans:value> </beans:list> </beans:property> 
+		<beans:property name="packagesToScan" value="com.sspring.bean"/> <beans:property 
+		name="hibernateProperties"> <beans:props> <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect 
+		</beans:prop> <beans:prop key="hibernate.show_sql">false</beans:prop> <beans:prop 
+		key="hibernate.id.new_generator_mappings">false</beans:prop> <beans:prop 
+		key="hibernate.enable_lazy_load_no_trans">true</beans:prop> </beans:props> 
+		</beans:property> </beans:bean> -->
+
+	<beans:bean id="myEmf"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
-		<!-- <beans:property name="annotatedClasses">
-			<beans:list>
-				<beans:value>com.sspring.bean.User</beans:value>
-				<beans:value>com.sspring.bean.Role</beans:value>
-				<beans:value>com.sspring.bean.Product</beans:value>
-			</beans:list>
-		</beans:property> -->
-		<beans:property name="packagesToScan" value="com.sspring.bean"/>
-		<beans:property name="hibernateProperties">
+		<beans:property name="packagesToScan" value="com.sspring.bean" />
+
+		<beans:property name="jpaVendorAdapter">
+			<beans:bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</beans:property>
+
+
+		<beans:property name="jpaProperties">
 			<beans:props>
 				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect
 				</beans:prop>
@@ -53,6 +64,4 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-	
-	
 </beans:beans>

@@ -1,5 +1,8 @@
 package com.sspring.dao;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,34 +15,30 @@ import com.sspring.bean.Role;
 @Transactional
 @Repository
 public class RoleDaoImpl implements RoleDao {
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	@Override
 	public void persist(Role role) {
-		this.getSession().persist(role);
+		entityManager.persist(role);
 	}
 
 	@Override
 	public void update(Role role) {
-		this.getSession().update(role);
+		entityManager.merge(role);
 	}
 
 	@Override
 	public void delete(Role role) {
-		this.getSession().delete(role);
+		entityManager.remove(role);
 	}
 
 	@Override
 	public Role findByRole(String role) {
-		return (Role) getSession()
-				.createCriteria(Role.class)
-				.add(Restrictions.eq("role", role))
-				.uniqueResult();
+		return (Role) entityManager
+				.createQuery("from Role where role = :role")
+				.setParameter("role", role)
+				.getSingleResult();
 	}
 
 }
