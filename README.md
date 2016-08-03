@@ -47,3 +47,7 @@ Tutorial Spring Security + MySql + Hibernate (service, dao, controller layers)
 Good example on how to create your own custom UserDetailsService
 - https://gist.github.com/esfand/6811882#how-to-use-custom-dao-class-in-spring-security
 *GrantedAuthorityImpl was replaced by SimpleGrantedAuthority in Spring Security 4
+
+How to solve the LazyInitializationException :
+- add this to your spring-jdbc.xml
+'property name="hibernate.enable_lazy_load_no_trans" value="true"'
