@@ -44,6 +44,8 @@
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
 
+	<beans:bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan
 		base-package="com.sspring.controller, com.sspring.validator, com.sspring.dao, com.sspring.mapper, com.sspring.service" />

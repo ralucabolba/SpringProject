@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sspring.bean.Product;
 import com.sspring.bean.User;
-import com.sspring.dao.ProductDao;
-import com.sspring.dao.RoleDao;
-import com.sspring.dao.UserDao;
 import com.sspring.service.UserService;
 import com.sspring.util.UtilService;
 import com.sspring.validator.UserValidator;
@@ -78,7 +76,9 @@ public class UserController {
 		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		String role = getUserRole(user.getRole().getRole());
 
-		List<Product> products = userService.getProductsForUser(user);
+		//List<Product> products = userService.getProductsForUser(user);
+		
+		List<Product> products = user.getProducts();
 
 		model.addObject("productList", products);
 		model.addObject("role", role);

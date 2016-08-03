@@ -36,11 +36,6 @@ public class RoleDaoImpl implements RoleDao {
 
 	@Override
 	public Role findByRole(String role) {
-		/*return (Role) this.getSession()
-				.createQuery("from Role where role = ?")
-				.setParameter(0, role)
-				.getSingleResult();*/
-		
 		return (Role) getSession()
 				.createCriteria(Role.class)
 				.add(Restrictions.eq("role", role))
