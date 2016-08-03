@@ -16,6 +16,6 @@ public interface UserService {
 	
 	public User findById(int id);
 	
-	public List<Product> getProductsForUser(User user);
+	/*public List<Product> getProductsForUser(User user);*/
 	
 }

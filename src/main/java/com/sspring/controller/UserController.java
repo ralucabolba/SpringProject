@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sspring.bean.Product;
 import com.sspring.bean.User;
+import com.sspring.service.ProductService;
 import com.sspring.service.UserService;
 import com.sspring.util.UtilService;
 import com.sspring.validator.UserValidator;
@@ -31,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ProductService productService;
 
 	/* Redirection to login page */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -76,9 +80,14 @@ public class UserController {
 		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		String role = getUserRole(user.getRole().getRole());
 
-		//List<Product> products = userService.getProductsForUser(user);
+		List<Product> products;
 		
-		List<Product> products = user.getProducts();
+		if(role.equals("admin")){
+			products = productService.findAll();
+		}
+		else{
+			products = user.getProducts();
+		}
 
 		model.addObject("productList", products);
 		model.addObject("role", role);

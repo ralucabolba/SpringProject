@@ -35,13 +35,14 @@
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="annotatedClasses">
+		<!-- <beans:property name="annotatedClasses">
 			<beans:list>
 				<beans:value>com.sspring.bean.User</beans:value>
 				<beans:value>com.sspring.bean.Role</beans:value>
 				<beans:value>com.sspring.bean.Product</beans:value>
 			</beans:list>
-		</beans:property>
+		</beans:property> -->
+		<beans:property name="packagesToScan" value="com.sspring.bean"/>
 		<beans:property name="hibernateProperties">
 			<beans:props>
 				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect

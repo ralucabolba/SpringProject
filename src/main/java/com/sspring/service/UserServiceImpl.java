@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
-	@Override
+	/*@Override
 	public List<Product> getProductsForUser(User user) {
 		List<Product> products = null;
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return products;
-	}
+	}*/
 
 	@Override
 	public User findUserByUsername(String username) {
