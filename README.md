@@ -49,5 +49,4 @@ Good example on how to create your own custom UserDetailsService
 *GrantedAuthorityImpl was replaced by SimpleGrantedAuthority in Spring Security 4
 
 How to solve the LazyInitializationException :
-- add this to your spring-jdbc.xml
-'property name="hibernate.enable_lazy_load_no_trans" value="true"'
+- http://www.harezmi.com.tr/blogpost497-Hibernate-s-New-Feature-For-Overcoming-Frustrating-LazyInitializationExceptions
