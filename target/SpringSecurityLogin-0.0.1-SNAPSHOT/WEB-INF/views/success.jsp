@@ -72,7 +72,7 @@
 						<td>${currentProduct.getName() }</td>
 						<td class="numeric">${currentProduct.getPrice() }</td>
 						<td class="numeric">${currentProduct.getQuantity() }</td>
-						<td class="numeric">${currentProduct.getUser().getId() }</td>
+						<td class="numeric">${currentProduct.getUserId() }</td>
 						<td>
 							<ul class="list-inline">
 								<li>

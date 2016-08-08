@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Role;
 
+/**
+ * Concrete dao class for Role class
+ * @author ralucab
+ *
+ */
 @Transactional
 @Repository
 public class RoleDaoImpl implements RoleDao {

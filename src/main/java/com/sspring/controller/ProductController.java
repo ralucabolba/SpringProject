@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sspring.bean.Product;
-import com.sspring.bean.User;
+import com.sspring.dto.ProductDto;
+import com.sspring.dto.UserDto;
 import com.sspring.service.ProductService;
 import com.sspring.service.UserService;
 import com.sspring.util.UtilService;
 import com.sspring.validator.ProductValidator;
 
+/**
+ * Controller class for operations on products
+ * @author ralucab
+ *
+ */
 @Controller
 public class ProductController {
 	@Autowired
@@ -43,10 +48,10 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/success/add", method = RequestMethod.POST)
-	public ModelAndView addNewProduct(@ModelAttribute Product product, BindingResult result, RedirectAttributes attr) {
+	public ModelAndView addNewProduct(@ModelAttribute ProductDto productDto, BindingResult result, RedirectAttributes attr) {
 		ModelAndView model = new ModelAndView();
 
-		productValidator.validate(product, result);
+		productValidator.validate(productDto, result);
 
 		if (result.hasErrors()) {
 			String error = UtilService.getError(result, messageSource);
@@ -59,11 +64,11 @@ public class ProductController {
 		 * Get the authenticated user in order to update the activity field and
 		 * to determine who created the product
 		 */
-		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		product.setUser(user);
+		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		//productDto.setUser(userDto);
 
 		try {
-			productService.add(product, user);
+			productService.add(productDto, userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -82,38 +87,42 @@ public class ProductController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/updateProduct");
 
-		Product product = productService.findById(productId);
-		model.addObject("selectedProduct", product);
+		ProductDto productDto = productService.findById(productId);
+		model.addObject("selectedProduct", productDto);
 		return model;
 	}
 
 	@RequestMapping(value = "/success/update", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute Product product, BindingResult result,
+	public ModelAndView updateProduct(@ModelAttribute ProductDto productDto, BindingResult result,
 			@RequestParam("userId") int userId, RedirectAttributes attr) {
 		ModelAndView model = new ModelAndView();
 
-		productValidator.validate(product, result);
+		productValidator.validate(productDto, result);
 
 		if (result.hasErrors()) {
 			String error = UtilService.getError(result, messageSource);
 
 			attr.addFlashAttribute("incorrectProductMessage", error);
-			model.setViewName("redirect:/success/update/" + product.getId());
+			model.setViewName("redirect:/success/update/" + productDto.getId());
 			return model;
 		}
 
-		product.setUser(userService.findById(userId));
+		//productDto.setUser(userService.findById(userId));
 
+		/*Get the owner of the product*/
+		
+		UserDto owner = userService.findById(userId);
+		
 		/* Get the authenticated user in order to update the activity field */
-		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		UserDto authenticatedUserDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		try {
-			productService.update(product, user);
+			productService.update(productDto, owner, authenticatedUserDto);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 
 			attr.addFlashAttribute("incorrectProductMessage", "Could not update product. Please try again later.");
-			model.setViewName("redirect:/success/update/" + product.getId());
+			model.setViewName("redirect:/success/update/" + productDto.getId());
 			return model;
 		}
 
@@ -128,10 +137,10 @@ public class ProductController {
 		ModelAndView model = new ModelAndView();
 
 		/* Get the authenticated user in order to update the activity field */
-		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		try {
-			productService.delete(productId, user);
+			productService.delete(productId, userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 

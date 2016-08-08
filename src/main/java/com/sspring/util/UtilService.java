@@ -1,15 +1,15 @@
 package com.sspring.util;
 
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import com.sspring.bean.User;
-import com.sspring.dao.UserDao;
-
-public class UtilService {
+/**
+ * Class that contains static methods useful in multiple places in project
+ * @author ralucab
+ *
+ */
+public final class UtilService {
 	/**
 	 * Method that gets all the errors from the BindingResult object and
 	 * concatenates them
@@ -30,15 +30,4 @@ public class UtilService {
 
 		return error;
 	}
-
-//	/**
-//	 * Method that gets the authenticated user
-//	 * 
-//	 * @return an object of type User
-//	 */
-//	public static User getAuthenticatedUser(UserDao userDao) {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		User user = userDao.findUserByUsername(authentication.getName());
-//		return user;
-//	}
 }

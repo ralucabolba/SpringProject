@@ -2,19 +2,19 @@ package com.sspring.service;
 
 import java.util.List;
 
-import com.sspring.bean.Product;
-import com.sspring.bean.User;
+import com.sspring.dto.ProductDto;
+import com.sspring.dto.UserDto;
 
 public interface ProductService {
-	public void add(Product product, User user);
+	public void add(ProductDto productDto, UserDto userDto);
 
-	public void update(Product product, User user);
+	public void update(ProductDto productDto, UserDto ownerDto, UserDto authenticatedUserDto);
 
-	public void delete(int productId, User user);
+	public void delete(int productId, UserDto userDto);
 	
-	public Product findById(int productId);
+	public ProductDto findById(int productId);
 	
-	public List<Product> findAll();
+	public List<ProductDto> findAll();
 
-	public List<Product> findAllForUserId(int userId);
+	public List<ProductDto> findAllForUserId(int userId);
 }

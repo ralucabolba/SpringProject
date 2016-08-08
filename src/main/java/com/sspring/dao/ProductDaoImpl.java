@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Product;
 
+/**
+ * Concrete dao class for Product class
+ * @author ralucab
+ *
+ */
 @Transactional
 @Repository
 public class ProductDaoImpl implements ProductDao {

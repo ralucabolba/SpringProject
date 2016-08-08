@@ -75,7 +75,7 @@
 				</div>
 
 				<input type="hidden" name="userId"
-					value="${selectedProduct.getUser().getId()}">
+					value="${selectedProduct.getUserId()}">
 
 				<button type="submit" class="btn btn-success"
 					style="text-align: center">Save changes</button>

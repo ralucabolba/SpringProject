@@ -1,20 +1,17 @@
 package com.sspring.service;
 
-import java.util.List;
-
-import com.sspring.bean.Product;
-import com.sspring.bean.User;
+import com.sspring.dto.UserDto;
 
 public interface UserService {
-	public void add(User user);
+	public void add(UserDto user);
 	
-	public void update(User user);
+	public void update(UserDto user);
 
-	public void delete(User user);
+	public void delete(UserDto user);
 	
-	public User findUserByUsername(String username);
+	public UserDto findUserByUsername(String username);
 	
-	public User findById(int id);
+	public UserDto findById(int id);
 	
 	/*public List<Product> getProductsForUser(User user);*/
 	

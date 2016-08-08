@@ -14,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sspring.bean.Product;
 import com.sspring.bean.User;
 
+/**
+ * Concrete dao class for User class
+ * @author ralucab
+ *
+ */
 @Transactional
 @Repository
 public class UserDaoImpl implements UserDao {

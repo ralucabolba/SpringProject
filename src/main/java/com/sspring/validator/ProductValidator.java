@@ -5,19 +5,24 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.sspring.bean.Product;
+import com.sspring.dto.ProductDto;
 
+/**
+ * Validator class for Product class
+ * @author ralucab
+ *
+ */
 @Component
 public class ProductValidator implements Validator{
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Product.class.equals(clazz);
+		return ProductDto.class.equals(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Product product = (Product)target;
+		ProductDto product = (ProductDto)target;
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Empty");
 		

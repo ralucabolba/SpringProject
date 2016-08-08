@@ -11,16 +11,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sspring.bean.Product;
-import com.sspring.bean.User;
+import com.sspring.dto.ProductDto;
+import com.sspring.dto.UserDto;
 import com.sspring.service.ProductService;
 import com.sspring.service.UserService;
 import com.sspring.util.UtilService;
 import com.sspring.validator.UserValidator;
 
+/**
+ * Controller class for operations on users
+ * @author ralucab
+ *
+ */
 @Controller
 public class UserController {
 
@@ -53,10 +57,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signup(@ModelAttribute("user") User user, BindingResult result) {
+	public ModelAndView signup(@ModelAttribute("user") UserDto userDto, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 
-		userValidator.validate(user, result);
+		userValidator.validate(userDto, result);
 
 		if (result.hasErrors()) {
 			String error = UtilService.getError(result, messageSource);
@@ -66,7 +70,7 @@ public class UserController {
 			return model;
 		}
 
-		userService.add(user);
+		userService.add(userDto);
 
 		model.setViewName("redirect:/login");
 		return model;
@@ -77,21 +81,21 @@ public class UserController {
 		ModelAndView model = new ModelAndView();
 
 		/* Get the authenticated user */
-		User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		String role = getUserRole(user.getRole().getRole());
+		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		String role = getUserRole(userDto.getRole().getRole());
 
-		List<Product> products;
+		List<ProductDto> products;
 		
 		if(role.equals("admin")){
 			products = productService.findAll();
 		}
 		else{
-			products = user.getProducts();
+			products = userDto.getProducts();
 		}
 
 		model.addObject("productList", products);
 		model.addObject("role", role);
-		model.addObject("lastAction", user.getLastAction());
+		model.addObject("lastAction", userDto.getLastAction());
 		model.setViewName("success");
 		return model;
 	}
