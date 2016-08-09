@@ -1,13 +1,20 @@
 package com.sspring.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sspring.bean.Role;
 import com.sspring.bean.User;
+import com.sspring.converter.RoleDtoConverter;
 import com.sspring.converter.UserDtoConverter;
 import com.sspring.dao.RoleDao;
 import com.sspring.dao.UserDao;
+import com.sspring.dto.ProductDto;
+import com.sspring.dto.RoleDto;
 import com.sspring.dto.UserDto;
 
 /**
@@ -28,11 +35,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void add(UserDto userDto) {
 		/* Get the Role object for ROLE_USER */
-		Role role = roleDao.findByRole("ROLE_USER");
-
+		RoleDto role = RoleDtoConverter.toDto(roleDao.findByRole("ROLE_USER"));
+		List<ProductDto> products = new ArrayList<>();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		
+		userDto.setLastAction(dateFormat.format(new Date()));
+		userDto.setProducts(products);
+		userDto.setRole(role);
+		
 		User user = UserDtoConverter.toEntity(userDto);
 
-		user.setRole(role);
 		userDao.persist(user);
 	}
 

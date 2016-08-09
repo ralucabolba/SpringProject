@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  * Bean class User
@@ -37,9 +36,6 @@ public class User implements Serializable {
 	private String username;
 
 	private String password;
-
-	@Transient
-	private String confirmationPassword;
 
 	private int age;
 
@@ -85,14 +81,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getConfirmationPassword() {
-		return confirmationPassword;
-	}
-
-	public void setConfirmationPassword(String confirmationPassword) {
-		this.confirmationPassword = confirmationPassword;
 	}
 
 	public int getAge() {

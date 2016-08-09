@@ -4,17 +4,4 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
-
-<!-- 	<bean id="userDao" class="com.sspring.dao.UserDaoImpl"> -->
-<!-- 		<property name="dataSource" ref="dataSource" /> -->
-<!-- 	</bean> -->
-	
-<!-- 	<bean id="productDao" class="com.sspring.dao.ProductDaoImpl"> -->
-<!-- 		<property name="dataSource" ref="dataSource" /> -->
-<!-- 	</bean> -->
-	
-<!-- 	<bean id="roleDao" class="com.sspring.dao.RoleDaoImpl"> -->
-<!-- 		<property name="dataSource" ref="dataSource"/> -->
-<!-- 	</bean> -->
-	
 </beans>

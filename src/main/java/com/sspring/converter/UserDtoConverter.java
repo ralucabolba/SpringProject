@@ -2,6 +2,7 @@ package com.sspring.converter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.sspring.bean.User;
@@ -23,7 +24,6 @@ public final class UserDtoConverter {
 		userDto.setName(user.getName());
 		userDto.setUsername(user.getUsername());
 		userDto.setPassword(user.getPassword());
-		userDto.setConfirmationPassword(user.getConfirmationPassword());
 		userDto.setAge(user.getAge());
 		userDto.setSalary(user.getSalary());
 		userDto.setLastAction(dateFormat.format(user.getLastAction()));
@@ -43,11 +43,12 @@ public final class UserDtoConverter {
 		user.setName(userDto.getName());
 		user.setUsername(userDto.getUsername());
 		user.setPassword(userDto.getPassword());
-		user.setConfirmationPassword(userDto.getConfirmationPassword());
 		user.setAge(userDto.getAge());
 		user.setSalary(userDto.getSalary());
+		
 		try {
-			user.setLastAction(dateFormat.parse(userDto.getLastAction()));
+			Date date = dateFormat.parse(userDto.getLastAction());
+			user.setLastAction(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

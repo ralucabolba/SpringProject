@@ -32,6 +32,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void persist(User user) {
+		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 		this.getSession().persist(user);
 	}
 

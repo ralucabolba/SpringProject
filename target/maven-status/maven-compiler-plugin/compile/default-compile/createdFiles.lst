@@ -1,5 +1,5 @@
-com\sspring\service\AuthenticationService.class
 com\sspring\validator\UserValidator.class
+com\sspring\config\RootConfig.class
 com\sspring\dto\RoleDto.class
 com\sspring\bean\User.class
 com\sspring\dao\UserDao.class
@@ -17,8 +17,12 @@ com\sspring\bean\Role.class
 com\sspring\dao\ProductDao.class
 com\sspring\dao\ProductDaoImpl.class
 com\sspring\dto\ProductDto.class
+com\sspring\config\SecurityInitializer.class
 com\sspring\service\ProductService.class
 com\sspring\dao\RoleDaoImpl.class
+com\sspring\config\Initializer.class
+com\sspring\config\SecurityConfig.class
+com\sspring\config\AppConfig.class
 com\sspring\controller\ProductController.class
 com\sspring\converter\ProductDtoConverter.class
 com\sspring\converter\RoleDtoConverter.class

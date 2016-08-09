@@ -16,11 +16,13 @@ import com.sspring.dao.UserDao;
 
 /**
  * Service class for the authentication operation
+ * 
  * @author ralucab
  *
  */
-@Service
-public class AuthenticationServiceImpl implements AuthenticationService, UserDetailsService {
+@Service//("authenticationService")
+@Transactional(readOnly = true)
+public class AuthenticationServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 
