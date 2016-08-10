@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Product;
+import com.sspring.bean.User;
 
 /**
  * Concrete dao class for Product class
@@ -31,18 +32,18 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public void persist(Product product) {
-		this.getSession().persist(product);
+		getSession().persist(product);
 	}
 	
 	@Override
 	public void update(Product product) {
-		this.getSession().update(product);
+		getSession().update(product);
 
 	}
 
 	@Override
 	public void delete(int productId) {
-		Product product = (Product) this.getSession().load(Product.class, productId);
+		Product product = (Product) getSession().get(Product.class, productId);
 		if (product != null) {
 			this.getSession().delete(product);
 		}
@@ -51,10 +52,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public Product findById(int id) {
 		try {
-			return (Product) getSession()
-					.createCriteria(Product.class)
-					.add(Restrictions.eq("id", id))
-					.uniqueResult();
+			return getSession().get(Product.class, id);
 		} catch (NoResultException e) {
 			return null;
 		}
