@@ -50,3 +50,6 @@ Good example on how to create your own custom UserDetailsService
 
 How to solve the LazyInitializationException :
 - http://www.harezmi.com.tr/blogpost497-Hibernate-s-New-Feature-For-Overcoming-Frustrating-LazyInitializationExceptions
+
+Custom authentication in Spring Security - Java Configuration
+- http://www.ekiras.com/2016/04/authenticate-user-with-custom-user-details-service-in-spring-security.html
