@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +21,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "products")
+@NamedQueries({ 
+	@NamedQuery(name = "FIND_ALL_PRODUCTS", 
+				query = "from Product"),
+	@NamedQuery(name = "FIND_ALL_PRODUCTS_FOR_USER", 
+				query = "from Product where user.id = :userId") })
 public class Product implements Serializable {
 	private static final long serialVersionUID = -1079322051204927830L;
 

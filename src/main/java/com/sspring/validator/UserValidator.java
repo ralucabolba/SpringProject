@@ -11,6 +11,7 @@ import com.sspring.dto.UserDto;
 
 /**
  * Validator class for User class
+ * 
  * @author ralucab
  *
  */
@@ -49,6 +50,16 @@ public class UserValidator implements Validator {
 
 		if (!user.getPassword().equals(user.getConfirmationPassword())) {
 			errors.rejectValue("confirmationPassword", "Different.registration.confirmationPassword");
+		}
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "age", "Empty");
+		if (user.getAge() <= 0) {
+			errors.rejectValue("age", "Negative.registration.age");
+		}
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "salary", "Empty");
+		if (user.getSalary() <= 0.0) {
+			errors.rejectValue("salary", "Negative.registration.salary");
 		}
 	}
 

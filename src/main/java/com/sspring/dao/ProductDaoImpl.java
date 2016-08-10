@@ -6,13 +6,11 @@ import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sspring.bean.Product;
-import com.sspring.bean.User;
 
 /**
  * Concrete dao class for Product class
@@ -62,16 +60,16 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<Product> findAll() {
         return (List<Product>) getSession()
-        		.createCriteria(Product.class)
-        		.list();
+        		.getNamedQuery("FIND_ALL_PRODUCTS")
+        		.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findAllForUserId(int userId) {
 		return (List<Product>) getSession()
-				.createCriteria(Product.class)
-				.add(Restrictions.eq("user.id", userId))
-				.list();
+				.getNamedQuery("FIND_ALL_PRODUCTS_FOR_USER")
+				.setParameter("userId", userId)
+				.getResultList();
 	}
 }

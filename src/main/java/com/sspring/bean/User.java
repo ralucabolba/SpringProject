@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,6 +24,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "users")
+@NamedQuery(name = "FIND_USER_BY_USERNAME", query = "from User where username = :username")
 public class User implements Serializable {
 	private static final long serialVersionUID = -4839531178856629643L;
 

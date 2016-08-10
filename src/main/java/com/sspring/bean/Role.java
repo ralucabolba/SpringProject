@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "roles")
+@NamedQuery(name="FIND_ROLE_BY_ROLE",query="from Role where role = :role")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 7746197782283698989L;
 

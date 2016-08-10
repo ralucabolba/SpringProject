@@ -107,8 +107,6 @@ public class ProductController {
 			return model;
 		}
 
-		//productDto.setUser(userService.findById(userId));
-
 		/*Get the owner of the product*/
 		
 		UserDto owner = userService.findById(userId);

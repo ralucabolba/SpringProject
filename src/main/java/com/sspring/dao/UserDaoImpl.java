@@ -2,16 +2,13 @@ package com.sspring.dao;
 
 import javax.persistence.NoResultException;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sspring.bean.Product;
 import com.sspring.bean.User;
 
 /**
@@ -58,9 +55,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findUserByUsername(String username) {
 		try {
-			return (User) getSession().createCriteria(User.class)
-					.add(Restrictions.eq("username", username))
-					.uniqueResult();
+			return (User) getSession()
+					.getNamedQuery("FIND_USER_BY_USERNAME")
+					.setParameter("username", username)
+					.getSingleResult();
 			
 		} catch (NoResultException e) {
 			return null;

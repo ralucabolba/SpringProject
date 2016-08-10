@@ -63,8 +63,7 @@ public class RootConfig {
 	public ReloadableResourceBundleMessageSource  reloadableResourceBundleMessageSource() {
 		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
 
-		source.setBasename("classpath*:validation");
-		source.setUseCodeAsDefaultMessage(true);
+		source.setBasename("classpath:validation");
 
 		return source;
 	}

@@ -2,7 +2,6 @@ package com.sspring.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +41,12 @@ public class RoleDaoImpl implements RoleDao {
 	@Override
 	public Role findByRole(String role) {
 		return (Role) getSession()
-				.createCriteria(Role.class)
+				.getNamedQuery("FIND_ROLE_BY_ROLE")
+				.setParameter("role", role)
+				.getSingleResult();
+				/*.createCriteria(Role.class)
 				.add(Restrictions.eq("role", role))
-				.uniqueResult();
+				.uniqueResult();*/
 	}
 
 }
