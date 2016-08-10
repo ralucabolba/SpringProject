@@ -56,3 +56,6 @@ Custom authentication in Spring Security - Java Configuration
 
 Security Spring project with Java configuration
 - https://github.com/Fruzenshtein/security-spr
+
+How to use Hibernate Named Queries
+- http://www.journaldev.com/3451/hibernate-named-query-example-namedquery
