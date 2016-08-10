@@ -53,3 +53,6 @@ How to solve the LazyInitializationException :
 
 Custom authentication in Spring Security - Java Configuration
 - http://www.ekiras.com/2016/04/authenticate-user-with-custom-user-details-service-in-spring-security.html
+
+Security Spring project with Java configuration
+- https://github.com/Fruzenshtein/security-spr
