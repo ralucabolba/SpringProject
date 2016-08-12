@@ -1,10 +1,53 @@
 $(document).ready(function(){
 	$(document).ready(function() {
-		$('#pw1Input, #pw2Input').keyup(function() {
-			if ($('#pw1Input').val() == $('#pw2Input').val()) {
+		/*Check if the passwords match*/
+		$('#password-user, #confirmation-password-user').keyup(function() {
+			if ($('#password-user').val() == $('#confirmation-password-user').val()) {
 				$('#message').html('Matching').css('color', 'green');
 			} else
 				$('#message').html('Not Matching').css('color', 'red');
+		});
+		
+		/*Signup user*/
+		$("#signup-form").submit(function(e){
+			e.preventDefault();
+			
+			var name = $("#name-user").val();
+			var age = $("#age-user").val();
+			var salary = $("#salary-user").val();
+			var username = $("#username-user").val();
+			var password = $("#password-user").val();
+			var confirmationPassword = $("#confirmation-password-user").val();
+			
+			var user = {
+					"name" : name,
+					"age" :age,
+					"salary" : salary,
+					"username" : username,
+					"password" : password,
+					"confirmationPassword" : confirmationPassword
+			};
+			
+			$.ajax({
+				url: "signup",
+				data: JSON.stringify(user),
+				type: "POST",
+				
+				beforeSend: function(xhr){
+					xhr.setRequestHeader("Accept", "application/json");
+			  		xhr.setRequestHeader("Content-Type", "application/json");
+			  		xhr.setRequestHeader(header, token);
+				},
+				
+				success: function(data){
+					if(data.isValid){
+						window.location = data.url;
+					}
+					else{
+						$("#error-message").html(data.error);
+					}
+				}
+			});
 		});
 		
 		var $selectedRow;

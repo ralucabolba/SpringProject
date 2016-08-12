@@ -21,7 +21,7 @@
 </head>
 <body>
 	<c:if test="${not empty signUpError }">
-		<div class="alert alert-danger" role="alert">${signUpError }</div>
+		<div id="error-message" class="alert alert-danger" role="alert">${signUpError }</div>
 	</c:if>
 
 	<div class="jumbotron signup">
@@ -30,44 +30,44 @@
 				<legend>Sign up</legend>
 
 				<div class="form-group">
-					<label for="nameInput">Name</label> <input type="text"
-						pattern="[a-zA-Z- ]*" id="nameInput" class="form-control"
+					<label for="name-user">Name</label> <input id="name-user" type="text"
+						pattern="[a-zA-Z- ]*" class="form-control"
 						name="name" required placeholder="Your name">
 				</div>
 
 				<div class="form-group">
-					<label for="ageInput">Age</label> <input type="number" min="1"
-						id="ageInput" class="form-control" name="age" required
+					<label for="age-user">Age</label> <input id="age-user" type="number" min="1"
+						class="form-control" name="age" required
 						placeholder="Your age">
 				</div>
 
 				<div class="form-group">
-					<label for="salaryInput">Salary</label> <input type="number"
-						step="0.01" min="0" id="salaryInput" class="form-control"
+					<label for="salary-user">Salary</label> <input id="salary-user" type="number"
+						step="0.01" min="0" class="form-control"
 						name="salary" required placeholder="Your salary">
 				</div>
 
 				<div class="form-group">
-					<label for="usernameInput">Username</label> <input type="text"
+					<label for="username-user">Username</label> <input id="username-user" type="text"
 						pattern=".{6,32}"
 						title="The username must contain between 6 and 32 characters "
-						id="usernameInput" class="form-control" name="username" required
+						class="form-control" name="username" required
 						placeholder="Username">
 				</div>
 
 				<div class="form-group">
-					<label for="pw1Input">Password</label> <input type="password"
+					<label for="password-user">Password</label> <input id="password-user" type="password"
 						pattern=".{6,32}"
 						title="The password must contain between 6 and 32 characters "
-						id="pw1Input" class="form-control" name="password" required
+						class="form-control" name="password" required
 						placeholder="Password">
 				</div>
 
 				<div class="form-group">
-					<label for="pw2Input">Repeat your password</label> <input
+					<label for="confirmation-password-user">Repeat your password</label> <input id="confirmation-password-user" 
 						type="password" pattern=".{6,32}"
 						title="The password must contain between 6 and 32 characters "
-						id="pw2Input" class="form-control" name="confirmationPassword"
+						class="form-control" name="confirmationPassword"
 						required placeholder="Password"> <span id="message"></span>
 				</div>
 

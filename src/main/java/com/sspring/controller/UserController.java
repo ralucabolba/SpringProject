@@ -1,24 +1,28 @@
 package com.sspring.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.sspring.dto.ProductDto;
 import com.sspring.dto.UserDto;
 import com.sspring.service.ProductService;
 import com.sspring.service.UserService;
-import com.sspring.util.UtilService;
-import com.sspring.validator.UserValidator;
 
 /**
  * Controller class for operations on users
@@ -27,13 +31,6 @@ import com.sspring.validator.UserValidator;
  */
 @Controller
 public class UserController {
-
-	@Autowired
-	private UserValidator userValidator;
-
-	@Autowired
-	private MessageSource messageSource;
-
 	@Autowired
 	private UserService userService;
 	
@@ -56,31 +53,35 @@ public class UserController {
 		return model;
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signup(@ModelAttribute("user") UserDto userDto, BindingResult result) {
-		ModelAndView model = new ModelAndView();
-
-		userValidator.validate(userDto, result);
-
-		if (result.hasErrors()) {
-			String error = UtilService.getError(result, messageSource);
-
-			model.addObject("signUpError", error);
-			model.setViewName("signup");
-			return model;
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void signup(@RequestBody UserDto userDto, HttpServletResponse response) throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		
+		boolean isValid = false;
+		
+		if(userService.findUserByUsername(userDto.getUsername()) != null){
+			map.put("error", "The username already exists in database");
+		}
+		else{
+			isValid = true;
+			userService.add(userDto);
+			map.put("url", "login.jsp");
 		}
 
-		userService.add(userDto);
-
-		model.setViewName("redirect:/login");
-		return model;
+		map.put("isValid", isValid);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
 	}
 
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public ModelAndView successPage() {
 		ModelAndView model = new ModelAndView();
 
-		/* Get the authenticated user */
+		/* Get the authenticated user*/ 
 		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		String role = getUserRole(userDto.getRole().getRole());
 
