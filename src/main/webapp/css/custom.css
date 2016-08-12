@@ -1,22 +1,28 @@
 @CHARSET "ISO-8859-1";
 
 .jumbotron{
-	margin: 10% auto;
     padding: 50px;
     border-radius: 10px;
 }
 .jumbotron.login {
+	margin: 10% auto;
     width: 30%;
 }
 
 .jumbotron.table {
+	margin: 1% auto;
     width: 90%;
 }
 
-.jumbotron.product, .jumbotron.signup{
+.jumbotron.signup{
     width: 40%;
+    margin: 10% auto;
 }
 
+.jumbotron.product{
+	margin: 1% auto;
+	width:30%;
+}
 .alert {
 	width: 500px;
 	text-align: center;

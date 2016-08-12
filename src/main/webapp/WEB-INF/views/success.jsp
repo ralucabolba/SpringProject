@@ -6,7 +6,8 @@
 
 <html>
 <head>
-
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <meta charset="UTF-8" />
 <title>Users</title>
 
@@ -17,32 +18,12 @@
 	rel="stylesheet">
 <link href="<c:url value="/css/custom.css" />" type="text/css"
 	rel="stylesheet">
-<script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>
-	<c:url var="logoutUrl" value="/logout" />
-
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-left">
-					<li><a href="success/add">Add new product</a></li>
-					<li>
-						<form action="${logoutUrl}" method="post">
-							<button type="submit" class="btn btn-primary"
-								style="margin-top: 7px">Log out</button>
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
-						</form>
-
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
+	<!-- Including the navigation bar at the top of the page -->
+	<jsp:include page="nav.jsp" />
 
 	<form class="form-group">
 		<c:if test="${not empty incorrectProductMessage}">
@@ -54,43 +35,47 @@
 		<p>Hello, ${role}</p>
 		<p>Last update : ${lastAction}</p>
 	</div>
+
+	<!-- Including the div for the add operation of products -->
+	<jsp:include page="addproduct.jsp" />
+
 	<div class="jumbotron table">
 		<%
 			int rowCount = 0;
 		%>
+
+		<script type="text/javascript">
+			var products = [];
+		</script>
+
 		<div class="form-group">
-			<table class="table table-hover table-bordered">
+			<table id="product-table" class="table table-hover table-bordered">
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
 					<th>Price</th>
 					<th>Quantity</th>
 					<th>User id</th>
-					<th style="width:13%">Operation</th>
+					<th style="width: 13%">Operation</th>
 				</tr>
+
 				<c:forEach var="currentProduct" items="${productList }">
 					<tr>
-						<td>${currentProduct.getId()}</td>
-						<td>${currentProduct.getName() }</td>
-						<td class="numeric">${currentProduct.getPrice() }</td>
-						<td class="numeric">${currentProduct.getQuantity() }</td>
-						<td class="numeric">${currentProduct.getUserId() }</td>
+						<td class="idProduct">${currentProduct.getId()}</td>
+						<td class="nameProduct">${currentProduct.getName() }</td>
+						<td class="numeric priceProduct">${currentProduct.getPrice() }</td>
+						<td class="numeric quantityProduct">${currentProduct.getQuantity() }</td>
+						<td class="numeric userIdProduct">${currentProduct.getUserId() }</td>
 						<td>
 							<ul class="list-inline">
 								<li>
-									<form action="success/update/${currentProduct.getId()}"
-										method="get">
-										<button type="submit" class="btn btn-info">Update</button>
-									</form>
+									<button class="btn btn-info rowUpdate"
+										data-toggle="modal"
+										data-target="#update-dialog">Update</button>
 								</li>
 								<li>
-									
-									<form action="success/delete?productId=${currentProduct.getId()}"
-										method="post">
-										<button type="submit" class="btn btn-danger">Delete</button>
-										<input type="hidden" name="${_csrf.parameterName}"
-											value="${_csrf.token}" />
-									</form>
+									<button class="btn btn-danger rowDelete" data-toggle="modal"
+										data-target="#delete-dialog">Delete</button>
 								</li>
 							</ul>
 						</td>
@@ -110,12 +95,47 @@
 		</div>
 	</div>
 
+	<!-- Include the dialog for updating a product -->
+	<jsp:include page="update-dialog.jsp"/>
 
-	<!-- Javascript -->
-	<script src="bootstrap/min.js"></script>
-	<!-- JQuery -->
+	<!-- Delete confirmation dialog-->
+	<div id="delete-dialog" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Delete product?</h4>
+				</div>
+				<div class="modal-body">
+					<p>The product will be permanently deleted and cannot be
+						recovered. Are you sure?</p>
+				</div>
+				<div class="modal-footer">
+					<button id="dialog-close" type="button" class="btn btn-default"
+						data-dismiss="modal">Close</button>
+					<input type="hidden" id="rowNo">
+					<button id="dialog-delete" type="button" class="btn btn-primary">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- jQuery -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+	<!-- Javascript -->
+	<script type="text/javascript"
+		src="<c:url value="/bootstrap/bootstrap.min.js" />"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+	
+	<script type="text/javascript" src="<c:url value="/javascript/main.js" />"></script>
+
 </body>
 </html>
 

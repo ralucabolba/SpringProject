@@ -1,24 +1,20 @@
 package com.sspring.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sspring.dto.ProductDto;
 import com.sspring.dto.UserDto;
 import com.sspring.service.ProductService;
 import com.sspring.service.UserService;
-import com.sspring.util.UtilService;
-import com.sspring.validator.ProductValidator;
 
 /**
  * Controller class for operations on products
@@ -28,38 +24,14 @@ import com.sspring.validator.ProductValidator;
 @Controller
 public class ProductController {
 	@Autowired
-	private ProductValidator productValidator;
-
-	@Autowired
-	private MessageSource messageSource;
-
-	@Autowired
 	private ProductService productService;
 	
 	@Autowired
 	private UserService userService;
 
-	/* Handle request for add product operation */
-	@RequestMapping(value = "/success/add", method = RequestMethod.GET)
-	public ModelAndView addProductPage() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("addProduct");
-		return model;
-	}
-
-	@RequestMapping(value = "/success/add", method = RequestMethod.POST)
-	public ModelAndView addNewProduct(@ModelAttribute ProductDto productDto, BindingResult result, RedirectAttributes attr) {
-		ModelAndView model = new ModelAndView();
-
-		productValidator.validate(productDto, result);
-
-		if (result.hasErrors()) {
-			String error = UtilService.getError(result, messageSource);
-
-			model.addObject("incorrectProductMessage", error);
-			model.setViewName("addProduct");
-			return model;
-		}
+	@RequestMapping(value = "/success/add", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void addNewProduct(@RequestBody ProductDto productDto) {
 		/*
 		 * Get the authenticated user in order to update the activity field and
 		 * to determine who created the product
@@ -71,45 +43,16 @@ public class ProductController {
 			productService.add(productDto, userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			model.addObject("incorrectProductMessage", "Could not add product. Please try again later.");
-			model.setViewName("addProduct");
-			return model;
 		}
-
-		model.setViewName("redirect:/success");
-
-		return model;
 	}
-
-	@RequestMapping(value = "/success/update/{productId}", method = RequestMethod.GET)
-	public ModelAndView updateProductPage(@PathVariable("productId") int productId) {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/updateProduct");
-
-		ProductDto productDto = productService.findById(productId);
-		model.addObject("selectedProduct", productDto);
-		return model;
-	}
-
-	@RequestMapping(value = "/success/update", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute ProductDto productDto, BindingResult result,
-			@RequestParam("userId") int userId, RedirectAttributes attr) {
-		ModelAndView model = new ModelAndView();
-
-		productValidator.validate(productDto, result);
-
-		if (result.hasErrors()) {
-			String error = UtilService.getError(result, messageSource);
-
-			attr.addFlashAttribute("incorrectProductMessage", error);
-			model.setViewName("redirect:/success/update/" + productDto.getId());
-			return model;
-		}
-
+	
+	@RequestMapping(value = "/success/update", method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void updateProduct(@RequestBody ProductDto productDto) {
 		/*Get the owner of the product*/
 		
-		UserDto owner = userService.findById(userId);
+		UserDto owner = userService.findById(productDto.getUserId());
 		
 		/* Get the authenticated user in order to update the activity field */
 		UserDto authenticatedUserDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -118,38 +61,20 @@ public class ProductController {
 			productService.update(productDto, owner, authenticatedUserDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			attr.addFlashAttribute("incorrectProductMessage", "Could not update product. Please try again later.");
-			model.setViewName("redirect:/success/update/" + productDto.getId());
-			return model;
 		}
-
-		model.setViewName("redirect:/success");
-
-		return model;
 	}
 
-	/* Handle request for delete product operation */
-	@RequestMapping(value = "/success/delete", method = RequestMethod.POST)
-	public ModelAndView deleteProductPage(@RequestParam("productId") int productId, RedirectAttributes attr) {
-		ModelAndView model = new ModelAndView();
-
-		/* Get the authenticated user in order to update the activity field */
+	@RequestMapping(value = "/success/delete/{productId}", method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void deleteProductPage(@PathVariable int productId) {
 		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		try {
 			productService.delete(productId, userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			attr.addFlashAttribute("incorrectProductMessage", "Could not delete product. Please try again later.");
-			model.setViewName("redirect:/success");
-			return model;
 		}
 
-		model.setViewName("redirect:/success");
-
-		return model;
 	}
-
 }
