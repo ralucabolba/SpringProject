@@ -1,11 +1,9 @@
-com\sspring\validator\UserValidator.class
 com\sspring\config\RootConfig.class
 com\sspring\dto\RoleDto.class
 com\sspring\bean\User.class
 com\sspring\dao\UserDao.class
 com\sspring\dto\UserDto.class
 com\sspring\dao\RoleDao.class
-com\sspring\validator\ProductValidator.class
 com\sspring\service\UserServiceImpl.class
 com\sspring\service\ProductServiceImpl.class
 com\sspring\controller\UserController.class

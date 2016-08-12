@@ -67,7 +67,7 @@ public class UserController {
 		else{
 			isValid = true;
 			userService.add(userDto);
-			map.put("url", "login.jsp");
+			map.put("url", "login");
 		}
 
 		map.put("isValid", isValid);

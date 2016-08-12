@@ -1,6 +1,10 @@
 $(document).ready(function(){
 	$(document).ready(function() {
-		/*Check if the passwords match*/
+		/* Csrf parameter needed for spring security */
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		
+		/* Check if the passwords match */
 		$('#password-user, #confirmation-password-user').keyup(function() {
 			if ($('#password-user').val() == $('#confirmation-password-user').val()) {
 				$('#message').html('Matching').css('color', 'green');
@@ -8,7 +12,7 @@ $(document).ready(function(){
 				$('#message').html('Not Matching').css('color', 'red');
 		});
 		
-		/*Signup user*/
+		/* Signup user */
 		$("#signup-form").submit(function(e){
 			e.preventDefault();
 			
@@ -44,7 +48,9 @@ $(document).ready(function(){
 						window.location = data.url;
 					}
 					else{
-						$("#error-message").html(data.error);
+						$("#error-div").html('<div class="alert alert-dismissible alert-danger"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! </strong>' + data.error + '</div>' );
+						//$("#error-message").html(data.error);
+						// alert(data.error);
 					}
 				}
 			});
@@ -52,12 +58,15 @@ $(document).ready(function(){
 		
 		var $selectedRow;
 		
-		/*Fade in the Add New Product div when pressing the 'Add product' button*/
+		/*
+		 * Fade in the Add New Product div when pressing the 'Add product'
+		 * button
+		 */
 		$("#addProduct").click(function(){
 			$("#add-div").fadeIn();
 		});
 		
-		/*Fade in the Add New Product div when pressing the close button*/
+		/* Fade in the Add New Product div when pressing the close button */
 		$("#closeAdd").click(function(event){
 			event.preventDefault();
 			$("#add-div").fadeOut();
@@ -88,7 +97,7 @@ $(document).ready(function(){
 				},
 				
 				success: function(){
-					//BootstrapDialog.confirm('Product added successfully');
+					// BootstrapDialog.confirm('Product added successfully');
 					location.reload();
 				}
 				
@@ -96,16 +105,18 @@ $(document).ready(function(){
 			
 		});
 		
-		/*Get the selected table row when pressing the Delete button*/
+		/* Get the selected table row when pressing the Delete button */
 		$(".rowDelete").click(function(event){
 			event.preventDefault();
-			$selectedRow = $(this).closest("tr"); //get the row for the product to be deleted
+			$selectedRow = $(this).closest("tr"); // get the row for the
+													// product to be deleted
 		});
 		
-		/*Get the selected table row when pressing the Update button*/
+		/* Get the selected table row when pressing the Update button */
 		$(".rowUpdate").click(function(event){
 			event.preventDefault();
-			$selectedRow = $(this).closest("tr"); //get the row for the product to be updated
+			$selectedRow = $(this).closest("tr"); // get the row for the
+													// product to be updated
 			
 			var id = $selectedRow.find(".idProduct").text();
 			var name = $selectedRow.find(".nameProduct").text();
@@ -120,11 +131,8 @@ $(document).ready(function(){
 			$("#userIdInput").val(userId);
 			
 		});
-	
-		var header = $("meta[name='_csrf_header']").attr("content");
-		var token = $("meta[name='_csrf']").attr("content");
 		
-		/*Delete the product when confirming from delete dialog*/
+		/* Delete the product when confirming from delete dialog */
 		$("#dialog-delete").click(function(event) {
 			event.preventDefault();
 			var $id = $selectedRow.find(".idProduct").text();
@@ -141,17 +149,17 @@ $(document).ready(function(){
 			  	
 			  	success: function() {
 			  		location.reload();
-			  		//$selectedRow.fadeOut();
-			  		//$("#delete-dialog").modal('toggle');
+			  		// $selectedRow.fadeOut();
+			  		// $("#delete-dialog").modal('toggle');
 			  	}
 			});
 		});
 		
-		/*Updating the product when pressing the Save button from update modal*/
+		/* Updating the product when pressing the Save button from update modal */
 		$("#update-form").submit(function(event){
 			event.preventDefault();
 			
-			/*Get the data introduce by user*/
+			/* Get the data introduce by user */
 			var id = $("#idInput").val();
 			var name = $("#nameInput").val();
 			var price = $("#priceInput").val();
@@ -180,14 +188,16 @@ $(document).ready(function(){
 				success: function(){
 					BootstrapDialog.confirm('Product updated successfully');
 					location.reload();
-					/*$("#update-dialog").modal('toggle');
-					
-					Update the table row
-					$selectedRow.find(".idProduct").text(id);
-					$selectedRow.find(".nameProduct").text(name);
-					$selectedRow.find(".priceProduct").text(price);
-					$selectedRow.find(".quantityProduct").text(quantity);
-					$selectedRow.find(".userIdProduct").text(userId);*/
+					/*
+					 * $("#update-dialog").modal('toggle');
+					 * 
+					 * Update the table row
+					 * $selectedRow.find(".idProduct").text(id);
+					 * $selectedRow.find(".nameProduct").text(name);
+					 * $selectedRow.find(".priceProduct").text(price);
+					 * $selectedRow.find(".quantityProduct").text(quantity);
+					 * $selectedRow.find(".userIdProduct").text(userId);
+					 */
 				}
 			});
 			

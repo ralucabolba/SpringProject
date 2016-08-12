@@ -44,10 +44,6 @@
 			int rowCount = 0;
 		%>
 
-		<script type="text/javascript">
-			var products = [];
-		</script>
-
 		<div class="form-group">
 			<table id="product-table" class="table table-hover table-bordered">
 				<tr>
@@ -56,7 +52,7 @@
 					<th>Price</th>
 					<th>Quantity</th>
 					<th>User id</th>
-					<th style="width: 13%">Operation</th>
+					<th>Operation</th>
 				</tr>
 
 				<c:forEach var="currentProduct" items="${productList }">

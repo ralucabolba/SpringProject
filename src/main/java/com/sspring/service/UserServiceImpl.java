@@ -61,12 +61,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto findUserByUsername(String username) {
-		return UserDtoConverter.toDto(userDao.findUserByUsername(username));
+		User user = userDao.findUserByUsername(username);
+		if(user == null){
+			return null;
+		}
+		return UserDtoConverter.toDto(user);
 	}
 
 	@Override
 	public UserDto findById(int id) {
-		return UserDtoConverter.toDto(userDao.findById(id));
+		User user = userDao.findById(id);
+		if(user == null){
+			return null;
+		}
+		return UserDtoConverter.toDto(user);
 	}
 
 }
