@@ -24,10 +24,7 @@
 
 </head>
 <body>
-	<%-- <c:if test="${not empty signUpError }">
-		<div id="error-message" class="alert alert-danger" role="alert">${signUpError }</div>
-	</c:if> --%>
-
+	<!-- Div for displaying an alert box with some error message -->
 	<div id="error-div"></div>
 
 	<div class="jumbotron signup">
@@ -96,5 +93,17 @@
 	<script type="text/javascript"
 		src="<c:url value="/javascript/main.js" />"></script>
 
+	<script>
+		$(document).ready(function(){
+			$("#signup-form").formValidation({
+				framework: 'bootstrap',
+				icon:{
+					valid:'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh',
+				}
+			});
+		});
+	</script>
 </body>
 </html>

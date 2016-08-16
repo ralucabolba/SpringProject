@@ -12,32 +12,33 @@
 <body>
 	<!-- Add div -->
 	<div id="add-div" class="jumbotron product" style="display: none">
-		<form id="add-form" class="form-horizontal" action="success/add"
+		<form id="add-form" class="form-inline" action="success/add"
 			method="post">
 			<fieldset>
-				<div class="form-group">
+				<div class="form-group" style="margin-right: 50px !important">
 					<label for="nameInput">Name</label> <input id="nameAdd" type="text"
 						class="form-control" name="name" placeholder="Product name"
 						required>
 				</div>
 
-				<div class="form-group">
-					<label for="priceInput">Price</label> <input id="priceAdd" type="number"
-						step="0.01" min="0" class="form-control" name="price"
-						placeholder="Product price" required>
+				<div class="form-group" style="margin-right: 50px !important">
+					<label for="priceInput">Price</label> <input id="priceAdd"
+						type="number" step="0.01" min="0" class="form-control"
+						name="price" placeholder="Product price" required>
 				</div>
 
-				<div class="form-group">
-					<label for="quantityInput">Quantity</label> <input id="quantityAdd" type="number"
-						min="0" class="form-control" name="quantity"
+				<div class="form-group" style="margin-right: 50px !important">
+					<label for="quantityInput">Quantity</label> <input id="quantityAdd"
+						type="number" min="0" class="form-control" name="quantity"
 						placeholder="Product quantity" required>
 				</div>
 
 				<button type="submit" class="btn btn-success"
-					style="text-align: center">Add new product</button>
+					style="margin-right: 50px !important" style="text-align: center">Add
+					new product</button>
 
 				<button id="closeAdd" class="btn btn-primary"
-					style="text-align: center">Close</button>
+					style="margin-right: 50px !important" style="text-align: center">Close</button>
 
 				<input type="hidden" name="${_csrf.parameterName }"
 					value="${_csrf.token }" />
