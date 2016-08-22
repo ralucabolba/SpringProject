@@ -69,11 +69,11 @@
 
 				<div class="form-group">
 					<label for="confirmation-password-user">Repeat your
-						password</label> <input id="confirmation-password-user" type="password"
+						password</label> <span id="message"></span> <input id="confirmation-password-user" type="password"
 						pattern=".{6,32}"
 						title="The password must contain between 6 and 32 characters "
 						class="form-control" name="confirmationPassword" required
-						placeholder="Password"> <span id="message"></span>
+						placeholder="Password">
 				</div>
 
 				<button type="submit" class="btn btn-primary">Sign up</button>
@@ -89,21 +89,8 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<!-- Javascript -->
-	<script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<c:url value="/bootstrap/bootstrap.min.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/javascript/main.js" />"></script>
-
-	<script>
-		$(document).ready(function(){
-			$("#signup-form").formValidation({
-				framework: 'bootstrap',
-				icon:{
-					valid:'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh',
-				}
-			});
-		});
-	</script>
 </body>
 </html>

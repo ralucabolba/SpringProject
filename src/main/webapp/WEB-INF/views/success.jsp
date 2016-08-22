@@ -11,10 +11,10 @@
 <meta charset="UTF-8" />
 <title>Users</title>
 
-<!-- Css -->
-<link href="<c:url value="/flatly/bootstrap.min.css" />" type="text/css"
-	rel="stylesheet">
-<link href="<c:url value="/flatly/bootstrap.css" />" type="text/css"
+<!-- Bootstrap CSS -->
+<link href="<c:url value="/dist/css/bootstrap.min.css" />"
+	type="text/css" rel="stylesheet">
+<link href="<c:url value="/dist/css/bootstrap.css" />" type="text/css"
 	rel="stylesheet">
 <link href="<c:url value="/css/custom.css" />" type="text/css"
 	rel="stylesheet">
@@ -69,11 +69,11 @@
 							<td class="numeric userIdProduct">${currentProduct.getUserId() }</td>
 							<td>
 								<ul class="list-inline">
-									<li>
+									<li class="list-inline-item">
 										<button class="btn btn-info rowUpdate" data-toggle="modal"
 											data-target="#update-dialog">Update</button>
 									</li>
-									<li>
+									<li class="list-inline-item">
 										<button class="btn btn-danger rowDelete" data-toggle="modal"
 											data-target="#delete-dialog">Delete</button>
 									</li>
@@ -100,12 +100,14 @@
 	<jsp:include page="update-dialog.jsp" />
 
 	<!-- Delete confirmation dialog-->
-	<div id="delete-dialog" class="modal">
-		<div class="modal-dialog">
+	<div id="delete-dialog" class="modal fade">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<h4 class="modal-title">Delete product?</h4>
 				</div>
 				<div class="modal-body">
@@ -133,12 +135,13 @@
 	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
 	<!-- Javascript -->
+	<script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+	
 	<script type="text/javascript"
-		src="<c:url value="/bootstrap/bootstrap.min.js" />"></script>
+		src="<c:url value="/dist/js/bootstrap.js" />"></script>
 
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 
+	
 	<script type="text/javascript"
 		src="<c:url value="/javascript/main.js" />"></script>
 

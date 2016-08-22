@@ -68,7 +68,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<!-- Javascript -->
-	<script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<c:url value="/bootstrap/bootstrap.min.js" />"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {

@@ -18,7 +18,9 @@
 	rel="stylesheet">
 <link href="<c:url value="/css/custom.css" />" type="text/css"
 	rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css" type="text/css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css"
+	type="text/css" rel="stylesheet">
 
 </head>
 <body>
@@ -45,42 +47,45 @@
 		%>
 
 		<div class="form-group">
-			<table id="product-table" class="table table-hover table-bordered">
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>User id</th>
-					<th>Operation</th>
-				</tr>
-
-				<c:forEach var="currentProduct" items="${productList }">
+			<table id="product-table"
+				class="table table-hover table-bordered tablesorter">
+				<thead>
 					<tr>
-						<td class="idProduct">${currentProduct.getId()}</td>
-						<td class="nameProduct">${currentProduct.getName() }</td>
-						<td class="numeric priceProduct">${currentProduct.getPrice() }</td>
-						<td class="numeric quantityProduct">${currentProduct.getQuantity() }</td>
-						<td class="numeric userIdProduct">${currentProduct.getUserId() }</td>
-						<td>
-							<ul class="list-inline">
-								<li>
-									<button class="btn btn-info rowUpdate"
-										data-toggle="modal"
-										data-target="#update-dialog">Update</button>
-								</li>
-								<li>
-									<button class="btn btn-danger rowDelete" data-toggle="modal"
-										data-target="#delete-dialog">Delete</button>
-								</li>
-							</ul>
-						</td>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>User id</th>
+						<th>Operation</th>
 					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="currentProduct" items="${productList }">
+						<tr>
+							<td class="idProduct">${currentProduct.getId()}</td>
+							<td class="nameProduct">${currentProduct.getName() }</td>
+							<td class="numeric priceProduct">${currentProduct.getPrice() }</td>
+							<td class="numeric quantityProduct">${currentProduct.getQuantity() }</td>
+							<td class="numeric userIdProduct">${currentProduct.getUserId() }</td>
+							<td>
+								<ul class="list-inline">
+									<li>
+										<button class="btn btn-info rowUpdate" data-toggle="modal"
+											data-target="#update-dialog">Update</button>
+									</li>
+									<li>
+										<button class="btn btn-danger rowDelete" data-toggle="modal"
+											data-target="#delete-dialog">Delete</button>
+									</li>
+								</ul>
+							</td>
+						</tr>
 
-					<%
-						rowCount++;
-					%>
-				</c:forEach>
+						<%
+							rowCount++;
+						%>
+					</c:forEach>
+				</tbody>
 			</table>
 		</div>
 
@@ -92,7 +97,7 @@
 	</div>
 
 	<!-- Include the dialog for updating a product -->
-	<jsp:include page="update-dialog.jsp"/>
+	<jsp:include page="update-dialog.jsp" />
 
 	<!-- Delete confirmation dialog-->
 	<div id="delete-dialog" class="modal">
@@ -116,10 +121,14 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- jQuery -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- JQuery tablesorter -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.2/js/jquery.tablesorter.js"></script>
 
 	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
@@ -129,8 +138,9 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
-	
-	<script type="text/javascript" src="<c:url value="/javascript/main.js" />"></script>
+
+	<script type="text/javascript"
+		src="<c:url value="/javascript/main.js" />"></script>
 
 </body>
 </html>

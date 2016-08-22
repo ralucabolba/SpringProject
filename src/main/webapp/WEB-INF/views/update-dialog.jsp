@@ -9,16 +9,19 @@
 </head>
 <body>
 	<!-- Update dialog -->
-	<div id="update-dialog" class="modal">
-		<div class="modal-dialog">
+	<div class="modal fade" id="update-dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<h4 class="modal-title">Update product</h4>
 				</div>
 				<div class="modal-body" style="padding: 50px">
-					<form id="update-form" class="form-horizontal" action="success/update" method="post">
+					<form id="update-form" class="form-horizontal"
+						action="success/update" method="post">
 						<fieldset>
 							<input type="hidden" id="idInput" name="id">
 
@@ -41,8 +44,9 @@
 
 							<input type="hidden" id="userIdInput" name="userId">
 
-							<button type="submit" id="update-save" class="btn btn-success update-save"
-								style="text-align: center">Save changes</button>
+							<button type="submit" id="update-save"
+								class="btn btn-success update-save" style="text-align: center">Save
+								changes</button>
 
 							<button id="update-close" type="button" class="btn btn-default"
 								data-dismiss="modal">Close</button>

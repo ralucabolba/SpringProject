@@ -67,6 +67,10 @@ $(document).ready(function() {
 		$("#add-div").fadeIn();
 	});
 	
+	$("#logout").click(function(){
+		$("#logout-form").submit();
+	});
+	
 	/* Fade in the Add New Product div when pressing the close button */
 	$("#closeAdd").click(function(event){
 		event.preventDefault();
@@ -187,7 +191,6 @@ $(document).ready(function() {
 			},
 			
 			success: function(){
-				BootstrapDialog.confirm('Product updated successfully');
 				location.reload();
 				/*
 				 * $("#update-dialog").modal('toggle');
