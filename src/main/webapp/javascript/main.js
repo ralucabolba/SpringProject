@@ -5,13 +5,61 @@ $(document).ready(function() {
 	
 	$('#product-table').tablesorter();
 	
-	/* Check if the passwords match */
+	/* Check if the passwords from signup page match */
 	$('#password-user, #confirmation-password-user').keyup(function() {
 		if ($('#password-user').val() == $('#confirmation-password-user').val()) {
-			$('#message').html('<span class="label label-success">Matching</span>');
+			$('#message').html('<span class="tag tag-success">Matching</span>');
 		} else
-			$('#message').html('<span class="label label-danger">Not matching</span>');
+			$('#message').html('<span class="tag tag-danger">Not matching</span>');
 	});
+	
+	/* Check if the passwords from my account page match */
+	$('#new-password-user, #new-confirmation-password-user').keyup(function() {
+		if ($('#new-password-user').val() == $('#new-confirmation-password-user').val()) {
+			$('#message').html('<span class="tag tag-success">Matching</span>');
+		} else
+			$('#message').html('<span class="tag tag-danger">Not matching</span>');
+	});
+	
+	/* Change account information */
+	$("#myaccount-form").submit(function(e){
+		e.preventDefault();
+		
+		var name = $("#new-name-user").val();
+		var age = $("#new-age-user").val();
+		var salary = $("#new-salary-user").val();
+		var username = $("#new-username-user").val();
+		
+		var user = {
+				"name" : name,
+				"age" :age,
+				"salary" : salary,
+				"username" : username
+		};
+		
+		$.ajax({
+			url: "changeAccount",
+			data: JSON.stringify(user),
+			type: "POST",
+			
+			beforeSend: function(xhr){
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.setRequestHeader(header, token);
+			},
+			
+			success: function(response){
+				if(response.isValid){
+					//window.location = response.url;
+					window.history.back();
+				}
+				else{
+					$("#error-div").html('<div class="alert alert-dismissible alert-danger"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! </strong>' + response.error + '</div>' );
+				}
+			}
+		});
+	});
+	
 	
 	/* Signup user */
 	$("#signup-form").submit(function(e){
@@ -36,6 +84,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: "signup",
 			data: JSON.stringify(user),
+			dataType: "json",
 			type: "POST",
 			
 			beforeSend: function(xhr){

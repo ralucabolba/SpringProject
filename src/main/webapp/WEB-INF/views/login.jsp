@@ -12,8 +12,8 @@
 	rel='stylesheet' type='text/css'>
 
 <!-- Bootstrap CSS -->
-<link href="<c:url value="/dist/css/bootstrap.min.css" />" type="text/css"
-	rel="stylesheet">
+<link href="<c:url value="/dist/css/bootstrap.min.css" />"
+	type="text/css" rel="stylesheet">
 <link href="<c:url value="/dist/css/bootstrap.css" />" type="text/css"
 	rel="stylesheet">
 <link href="<c:url value="/css/custom.css" />" type="text/css"
@@ -69,8 +69,13 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<!-- Javascript -->
-	<script type="text/javascript" src="<c:url value="/dist/js/bootstrap.min.js" />"></script>
-	
+	<script
+		src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+
+	<!-- Javascript -->
+	<script type="text/javascript"
+		src="<c:url value="/dist/js/bootstrap.min.js" />"></script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("button#login").click(function() {

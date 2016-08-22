@@ -7,6 +7,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.sspring.dto.ProductDto;
 import com.sspring.dto.UserDto;
 import com.sspring.service.ProductService;
@@ -52,11 +54,12 @@ public class UserController {
 		model.setViewName("signup");
 		return model;
 	}
+	
 
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void signup(@RequestBody UserDto userDto, HttpServletResponse response) throws IOException {
+	public void signup(@RequestBody UserDto userDto, HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException{
 		Map<String, Object> map = new HashMap<>();
 		
 		boolean isValid = false;
@@ -74,9 +77,23 @@ public class UserController {
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
+		response.getWriter().write(new ObjectMapper().writeValueAsString(map));
 	}
-
+	
+		
+	@RequestMapping(value="/success/myaccount", method=RequestMethod.GET)
+	public ModelAndView myAccount(){
+		ModelAndView model = new ModelAndView();
+		
+		/*Get the authenticated user*/
+		UserDto authUser = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		model.addObject("authenticatedUser", authUser);
+		
+		model.setViewName("myaccount");
+		return model;
+	}
+	
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public ModelAndView successPage() {
 		ModelAndView model = new ModelAndView();
@@ -117,6 +134,38 @@ public class UserController {
 		model.setViewName("login");
 
 		return model;
+	}
+	
+	@RequestMapping(value="/success/changeAccount", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void changeAccount(@RequestBody UserDto user, HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException
+	{
+		/* Get the authenticated user*/ 
+		UserDto userDto = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		boolean isValid = false;
+		
+		if(!userDto.getUsername().equals(user.getUsername()) && userService.findUserByUsername(user.getUsername()) != null){
+			map.put("error", "The username already exists in database");
+		}
+		else{
+			isValid = true;
+			
+			userDto.setName(user.getName());
+			userDto.setAge(user.getAge());
+			userDto.setSalary(user.getSalary());
+			userDto.setUsername(user.getUsername());
+			
+			userService.update(userDto);
+		}
+
+		map.put("isValid", isValid);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new ObjectMapper().writeValueAsString(map));
 	}
 
 	/**

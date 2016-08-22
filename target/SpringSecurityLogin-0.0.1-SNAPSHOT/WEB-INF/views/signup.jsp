@@ -13,9 +13,10 @@
 <link href='https://fonts.googleapis.com/css?family=Quicksand'
 	rel='stylesheet' type='text/css'>
 
-<link href="<c:url value="/flatly/bootstrap.min.css" />" type="text/css"
-	rel="stylesheet">
-<link href="<c:url value="/flatly/bootstrap.css" />" type="text/css"
+<!-- Bootstrap CSS -->
+<link href="<c:url value="/dist/css/bootstrap.min.css" />"
+	type="text/css" rel="stylesheet">
+<link href="<c:url value="/dist/css/bootstrap.css" />" type="text/css"
 	rel="stylesheet">
 <link href="<c:url value="/css/custom.css" />" type="text/css"
 	rel="stylesheet">
@@ -69,8 +70,8 @@
 
 				<div class="form-group">
 					<label for="confirmation-password-user">Repeat your
-						password</label> <span id="message"></span> <input id="confirmation-password-user" type="password"
-						pattern=".{6,32}"
+						password</label> <span id="message"></span> <input
+						id="confirmation-password-user" type="password" pattern=".{6,32}"
 						title="The password must contain between 6 and 32 characters "
 						class="form-control" name="confirmationPassword" required
 						placeholder="Password">
@@ -88,9 +89,20 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+	<!-- JQuery tablesorter -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.2/js/jquery.tablesorter.js"></script>
+		
 	<!-- Javascript -->
-	<script type="text/javascript" src="<c:url value="/bootstrap/bootstrap.min.js" />"></script>
+	<script
+		src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+
+	<!-- Javascript -->
+	<script type="text/javascript"
+		src="<c:url value="/dist/js/bootstrap.min.js" />"></script>
+
 	<script type="text/javascript"
 		src="<c:url value="/javascript/main.js" />"></script>
+
 </body>
 </html>
