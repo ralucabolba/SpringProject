@@ -65,3 +65,6 @@ Bootstrap 3 dialog:
 
 Spring MVC with Ajax and JQuery
 - http://fruzenshtein.com/spring-mvc-ajax-jquery/
+
+Pagination using Spring Data
+- http://ankushs92.github.io/tutorial/2016/05/03/pagination-with-spring-boot.html
