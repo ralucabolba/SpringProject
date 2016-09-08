@@ -12,7 +12,7 @@
 <body>
 	<c:url var="logoutUrl" value="/logout" />
 
-	<nav class="navbar navbar-dark bg-inverse">
+	<nav class="navbar navbar-full navbar-dark bg-inverse">
 		<button class="navbar-toggler hidden-sm-up" type="button"
 			data-toggle="collapse" data-target="#exCollapsingNavbar2"
 			aria-controls="exCollapsingNavbar2" aria-expanded="false"
@@ -27,6 +27,7 @@
 			</ul>
 		</div>
 	</nav>
+	
 	<!-- Form for performing logout -->
 	<form action="${logoutUrl}" method="post" id="logout-form">
 		<input type="hidden" name="${_csrf.parameterName}"
